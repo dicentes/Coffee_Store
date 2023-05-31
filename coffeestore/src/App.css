@@ -1,0 +1,25 @@
+.App {
+  text-align: center;
+}
+
+.btn {
+  
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.centered {
+  /* Optional: Set width and height for the centered div */
+}
+
+.navbar-coffee {
+  text-align: right;
+}
+
+.totalbackground {
+  background-color:aquamarine;
+}
