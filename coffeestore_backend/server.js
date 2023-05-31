@@ -39,34 +39,21 @@ app.post('/api/validate', async (req, res) => {
   }
   //await client.close();
 });
-// This will eventually be unncessary, but I wanted to first get the data from node to react, then eventually we'll do real calls. 
-const fakeInventoryData = [
-  {
-    productID: "1233456",
-    name: "Ferrara Brand One",
-    description: "A damn fine cup of coffee. I mean it's really good.",
-    quantity: "10",
-    price: "10"
-  },
-  {
-    productID: "7890123",
-    name: "Ferrara Brand Two",
-    description: "Basically mudwater. Undrinkable, even, but we oblige out of kindness.",
-    quantity: "50",
-    price: "12"
-  }
-];
+
 
 app.get("/api/inventory", async (req, res) => {
   try {
-    // Simulate a delay to mimic an asynchronous operation
-    await new Promise(resolve => setTimeout(resolve, 2000)); 
-    // Return the inventory data as the response
-    res.json(fakeInventoryData);
-    console.log("I've sent the inventory data.");
+    await client.connect();
+    const database = client.db("mydb"); // Update with your database name
+    const collection = database.collection("inventory"); // Update with your collection name
+    const inventoryData = await collection.find({}).toArray();
+    res.json(inventoryData);
+    console.log("Inventory data sent.");
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Internal Server Error" });
+  } finally {
+    await client.close();
   }
 });
 
